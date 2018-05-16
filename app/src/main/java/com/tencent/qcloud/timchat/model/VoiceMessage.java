@@ -16,6 +16,8 @@ import com.tencent.imsdk.TIMSoundElem;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.utils.AESHelper;
+import com.tencent.qcloud.timchat.utils.FileHelper;
 import com.tencent.qcloud.timchat.utils.FileUtil;
 import com.tencent.qcloud.timchat.utils.MediaUtil;
 
@@ -41,6 +43,11 @@ public class VoiceMessage extends Message {
      * @param filePath 语音数据地址
      */
     public VoiceMessage(long duration,String filePath){
+
+        byte[] bytes = FileHelper.readFileToByteArray(filePath);
+        bytes = AESHelper.encryption(bytes);
+        FileHelper.writeByteArrayToFile(filePath, bytes);
+
         message = new TIMMessage();
         TIMSoundElem elem = new TIMSoundElem();
         elem.setPath(filePath);
@@ -128,6 +135,11 @@ public class VoiceMessage extends Message {
             @Override
             public void onSuccess() {
                 try {
+
+                    byte[] bytes = FileHelper.readFileToByteArray(tempAudio);
+                    bytes = AESHelper.decryption(bytes);
+                    FileHelper.writeByteArrayToFile(tempAudio, bytes);
+
                     FileInputStream fis = new FileInputStream(tempAudio);
                     MediaUtil.getInstance().play(fis);
                     frameAnimatio.start();

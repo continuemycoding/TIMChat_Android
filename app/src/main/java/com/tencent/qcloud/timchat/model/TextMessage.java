@@ -21,6 +21,7 @@ import com.tencent.imsdk.ext.message.TIMMessageDraft;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.utils.AESHelper;
 import com.tencent.qcloud.timchat.utils.EmoticonUtil;
 
 import java.io.IOException;
@@ -78,8 +79,9 @@ public class TextMessage extends Message {
             int startIndex = s.getSpanStart(span);
             int endIndex = s.getSpanEnd(span);
             if (currentIndex < startIndex){
+                String text = s.subSequence(currentIndex, startIndex).toString();
                 TIMTextElem textElem = new TIMTextElem();
-                textElem.setText(s.subSequence(currentIndex, startIndex).toString());
+                textElem.setText(AESHelper.encryption(text));
                 message.addElement(textElem);
             }
             TIMFaceElem faceElem = new TIMFaceElem();
@@ -91,9 +93,11 @@ public class TextMessage extends Message {
             message.addElement(faceElem);
             currentIndex = endIndex;
         }
+
         if (currentIndex < s.length()){
+            String text = s.subSequence(currentIndex, s.length()).toString();
             TIMTextElem textElem = new TIMTextElem();
-            textElem.setText(s.subSequence(currentIndex, s.length()).toString());
+            textElem.setText(AESHelper.encryption(text));
             message.addElement(textElem);
         }
 
@@ -150,7 +154,7 @@ public class TextMessage extends Message {
                     break;
                 case Text:
                     TIMTextElem textElem = (TIMTextElem) message.getElement(i);
-                    result.append(textElem.getText());
+                    result.append(AESHelper.decryption(textElem.getText()));
                     break;
             }
 
@@ -199,7 +203,7 @@ public class TextMessage extends Message {
                     break;
                 case Text:
                     TIMTextElem textElem = (TIMTextElem) elems.get(i);
-                    stringBuilder.append(textElem.getText());
+                    stringBuilder.append(AESHelper.decryption(textElem.getText()));
                     break;
             }
 
