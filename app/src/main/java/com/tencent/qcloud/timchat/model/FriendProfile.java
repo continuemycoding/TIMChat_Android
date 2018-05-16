@@ -105,13 +105,12 @@ public class FriendProfile implements ProfileSummary {
      * 获取好友分组
      */
     public String getGroupName(){
-//
-//        if (profile.getFriendGroups().size() == 0){
-//            return MyApplication.getContext().getString(R.string.default_group_name);
-//        }else{
-//            return profile.getFriendGroups().get(0);
-//        }
-        return MyApplication.getContext().getString(R.string.default_group_name);
+
+        if (profile.getFriendGroups().size() == 0){
+            return MyApplication.getContext().getString(R.string.default_group_name);
+        }else{
+            return profile.getFriendGroups().get(0);
+        }
     }
 
 }

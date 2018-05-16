@@ -121,7 +121,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
         }else{
             msgNotify.setVisibility(View.GONE);
         }
-        if (isManager()){
+        if (isManager() && !type.equals("Private")){
             opt.setCanNav(true);
             opt.setOnClickListener(this);
             allowTypeContent = new HashMap<>();

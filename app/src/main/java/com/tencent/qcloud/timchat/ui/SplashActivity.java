@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.huawei.android.pushagent.PushManager;
+import com.meizu.cloud.pushsdk.util.MzSystemUtils;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMConnListener;
 import com.tencent.imsdk.TIMLogLevel;
@@ -198,6 +199,10 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
             PushManager.requestToken(this);
         }
 
+        //魅族推送只适用于Flyme系统,因此可以先行判断是否为魅族机型，再进行订阅，避免在其他机型上出现兼容性问题
+        if(MzSystemUtils.isBrandMeizu(getApplicationContext())){
+            com.meizu.cloud.pushsdk.PushManager.register(this, "112662", "3aaf89f8e13f43d2a4f97a703c6f65b3");
+        }
 
 //        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 //        Log.d(TAG, "refreshed token: " + refreshedToken);

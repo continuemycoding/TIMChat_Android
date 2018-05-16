@@ -6,7 +6,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
- <meta-data android:name="com.tencent.rdm.uuid" android:value="a2af72ec-a731-46eb-8501-0477e34702f3" />
+ <meta-data android:name="com.tencent.rdm.uuid" android:value="83b3186d-0ef4-40e4-83ca-ced776b1ee1e" />
 
     </application>
 

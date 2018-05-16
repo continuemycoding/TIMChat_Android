@@ -84,10 +84,12 @@ public class FriendshipEvent extends Observable implements TIMFriendshipProxyLis
 //        setChanged();
 //        notifyObservers(new NotifyCmd(NotifyType.GROUP_UPDATE, list));
 //    }
-//
-//    @Override
-//    public void OnFriendGroupUpdate(List<TIMFriendGroup> list) {
-//    }
+
+
+    public void OnFriendGroupUpdate(List<TIMFriendGroup> list) {
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.GROUP_UPDATE, list));
+    }
 
     /**
      * 好友关系链消息已读通知

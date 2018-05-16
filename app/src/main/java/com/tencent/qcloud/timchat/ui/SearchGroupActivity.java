@@ -29,12 +29,14 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
     private ProfileSummaryAdapter adapter;
     private EditText searchInput;
     private ListView listView;
+    private TextView tvNoResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_group);
         searchInput = (EditText) findViewById(R.id.inputSearch);
+        tvNoResult = (TextView) findViewById(R.id.noResult);
         listView =(ListView) findViewById(R.id.list);
         adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         listView.setAdapter(adapter);
@@ -87,5 +89,7 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
             list.add(new GroupProfile(item));
         }
         adapter.notifyDataSetChanged();
+
+        tvNoResult.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

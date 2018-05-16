@@ -26,7 +26,6 @@ import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.ui.NotifyDialog;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -109,10 +108,10 @@ public class ManageFriendGroupActivity extends FragmentActivity implements View.
                         @Override
                         public void onSuccess(List<TIMFriendResult> timFriendResults) {
                             Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.add_group_succ), Toast.LENGTH_SHORT).show();
-//                            FriendshipEvent.getInstance().OnAddFriendGroups(null);
+                            FriendshipEvent.getInstance().OnFriendGroupUpdate(null);
                             groups.add(groupname);
                             mGroupListAdapter.notifyDataSetChanged();
-//                            FriendshipEvent.getInstance().OnAddFriendGroups(null);
+                            FriendshipEvent.getInstance().OnFriendGroupUpdate(null);
                         }
                     });
                 }
@@ -146,9 +145,10 @@ public class ManageFriendGroupActivity extends FragmentActivity implements View.
                     @Override
                     public void onSuccess() {
                         Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.delete_group_succ), Toast.LENGTH_SHORT).show();
-//                        FriendshipEvent.getInstance().OnDelFriendGroups(Collections.singletonList(groups.get(position)));
+                        FriendshipEvent.getInstance().OnFriendGroupUpdate(null);
                         groups.remove(position);
                         mGroupListAdapter.notifyDataSetChanged();
+                        FriendshipEvent.getInstance().OnFriendGroupUpdate(null);
                     }
                 });
             }

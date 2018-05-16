@@ -119,6 +119,8 @@ public class GroupManagerPresenter {
             @Override
             public void onError(int i, String s) {
                 Log.e(TAG, "onError code" + i + " msg " + s);
+                if (infoView == null) return;
+                infoView.showGroupInfo(new ArrayList<TIMGroupDetailInfo>());
             }
 
             @Override
@@ -135,11 +137,12 @@ public class GroupManagerPresenter {
      *
      * @param groupId 群组ID
      */
-    public void searchGroupByID(String groupId){
+    public void searchGroupByID(final String groupId){
         TIMGroupManagerExt.getInstance().getGroupPublicInfo(Collections.singletonList(groupId), new TIMValueCallBack<List<TIMGroupDetailInfo>>() {
             @Override
             public void onError(int i, String s) {
                 Log.e(TAG, "onError code" + i + " msg " + s);
+                searchGroupByName(groupId);
             }
 
             @Override
